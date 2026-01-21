@@ -49,11 +49,28 @@ export default function ProvaPage() {
     };
   }, []);
 
+  useEffect(() => {
+    // Autoplay quando a seção do vídeo entrar em tela.
+    // (Com muted/playsInline, aumenta muito a chance de funcionar no mobile.)
+    if (!visibleSections[3]) return;
+    if (!videoRef.current) return;
+
+    videoRef.current.muted = true;
+    const p = videoRef.current.play();
+    if (p && typeof (p as Promise<void>).catch === "function") {
+      (p as Promise<void>).catch(() => {
+        // Se o browser bloquear, mantém o comportamento atual (clique para dar play).
+      });
+    }
+    setIsVideoPlaying(true);
+  }, [visibleSections]);
+
   const toggleVideo = () => {
     if (videoRef.current) {
       if (isVideoPlaying) {
         videoRef.current.pause();
       } else {
+        videoRef.current.muted = true;
         videoRef.current.play();
       }
       setIsVideoPlaying(!isVideoPlaying);
@@ -222,6 +239,9 @@ export default function ProvaPage() {
             <video
               ref={videoRef}
               className="w-full h-full object-cover"
+              preload="auto"
+              autoPlay
+              muted
               playsInline
               onEnded={() => setIsVideoPlaying(false)}
             >

@@ -54,6 +54,7 @@ interface YouTubePlayer {
   pauseVideo: () => void
   getCurrentTime: () => number
   getDuration: () => number
+  mute?: () => void
   destroy: () => void
 }
 
@@ -102,15 +103,18 @@ export default function RevelacaoPage() {
       playerRef.current = new window.YT.Player("youtube-player", {
         videoId: YOUTUBE_VIDEO_ID,
         playerVars: {
-          autoplay: 0,
+          autoplay: 1,
           controls: 1,
           rel: 0,
           modestbranding: 1,
           playsinline: 1,
         },
         events: {
-          onReady: () => {
+          onReady: (event) => {
             setPlayerReady(true)
+            // Autoplay costuma exigir muted para funcionar em mobile/Chrome.
+            event.target.mute?.()
+            event.target.playVideo()
           },
           onStateChange: (event) => {
             if (event.data === window.YT.PlayerState.PLAYING) {

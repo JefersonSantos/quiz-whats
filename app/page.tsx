@@ -14,6 +14,7 @@ import { Screen6Question3 } from "@/components/screens/screen-6-question-3"
 import { Screen7Result } from "@/components/screens/screen-7-result"
 import { Screen8Relief } from "@/components/screens/screen-8-relief"
 import { Screen9Transition } from "@/components/screens/screen-9-transition"
+import { playChoiceSound } from "@/lib/play-choice-sound"
 
 const PROGRESS_MAP: Record<number, number> = {
   1: 5,
@@ -43,6 +44,7 @@ export default function DiagnosticPage() {
   }, [])
 
   const handleAnswer = useCallback((question: keyof Answers, answer: "A" | "B" | "C") => {
+    playChoiceSound()
     setAnswers((prev) => ({ ...prev, [question]: answer }))
   }, [])
 

@@ -1,7 +1,8 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { ActionButton } from "@/components/action-button"
+import { playChoiceSound } from "@/lib/play-choice-sound"
 
 interface Screen5Question2Props {
   onAnswer: (answer: "A" | "B" | "C") => void
@@ -40,9 +41,34 @@ export function Screen5Question2({ onAnswer, selectedAnswer, onNext }: Screen5Qu
   const [showFeedback, setShowFeedback] = useState(!!selectedAnswer)
 
   const handleSelect = (answer: "A" | "B" | "C") => {
+    playChoiceSound()
     onAnswer(answer)
     setShowFeedback(true)
   }
+
+  useEffect(() => {
+    const onKeyDown = (e: KeyboardEvent) => {
+      const target = e.target as HTMLElement | null
+      const tag = target?.tagName?.toLowerCase()
+      if (tag === "input" || tag === "textarea" || (target as any)?.isContentEditable) return
+
+      const key = e.key.toLowerCase()
+      if (key === "a" || key === "1") {
+        e.preventDefault()
+        handleSelect("A")
+      } else if (key === "b" || key === "2") {
+        e.preventDefault()
+        handleSelect("B")
+      } else if (key === "c" || key === "3") {
+        e.preventDefault()
+        handleSelect("C")
+      }
+    }
+
+    window.addEventListener("keydown", onKeyDown)
+    return () => window.removeEventListener("keydown", onKeyDown)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return (
     <div className="flex flex-col gap-8">
