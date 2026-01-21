@@ -14,9 +14,11 @@ import { Screen6Question3 } from "@/components/screens/screen-6-question-3"
 import { Screen7Result } from "@/components/screens/screen-7-result"
 import { Screen8Relief } from "@/components/screens/screen-8-relief"
 import { Screen9Transition } from "@/components/screens/screen-9-transition"
+import { Screen0Call } from "@/components/screens/screen-0-call"
 import { playChoiceSound } from "@/lib/play-choice-sound"
 
 const PROGRESS_MAP: Record<number, number> = {
+  0: 0,
   1: 5,
   2: 15,
   3: 20,
@@ -35,7 +37,7 @@ export interface Answers {
 }
 
 export default function DiagnosticPage() {
-  const [step, setStep] = useState(1)
+  const [step, setStep] = useState(0)
   const [answers, setAnswers] = useState<Answers>({})
   const router = useRouter()
 
@@ -61,6 +63,7 @@ export default function DiagnosticPage() {
       
       <div className="max-w-[420px] mx-auto px-4 sm:px-6 py-8 min-h-screen flex flex-col justify-center relative z-10">
         <ScreenWrapper step={step}>
+          {step === 0 && <Screen0Call onCallFinished={() => setStep(1)} />}
           {step === 1 && <Screen1Opening onNext={nextStep} />}
           {step === 2 && <Screen2GuiltBreak onNext={nextStep} />}
           {step === 3 && <Screen3Instruction onNext={nextStep} />}
