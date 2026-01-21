@@ -396,7 +396,3 @@ export default function RevelacaoPage() {
     </main>
   )
 }
-
-export function Loading() {
-  return null
-}
