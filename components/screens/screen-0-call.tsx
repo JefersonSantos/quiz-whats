@@ -97,9 +97,9 @@ export function Screen0Call({ onCallFinished }: Screen0CallProps) {
     <div className="flex flex-col gap-8 items-center text-center">
       <div className="space-y-2">
         <span className="text-xs text-muted-foreground uppercase tracking-wider">
-          Chamada simulada
+          Urgente⚠️
         </span>
-        <h1 className="text-2xl font-bold text-foreground">Ligação de Suporte</h1>
+        <h1 className="text-2xl font-bold text-foreground">Whatsapp Business API</h1>
         <p className="text-muted-foreground text-sm">
           iPhone • 4G • 72%
         </p>
@@ -111,8 +111,8 @@ export function Screen0Call({ onCallFinished }: Screen0CallProps) {
             WA
           </div>
           <div className="space-y-1">
-            <p className="text-lg font-semibold text-white">WhatsApp API Expert</p>
-            <p className="text-sm text-[#A1A1AA]">+55 (11) 99999-9999</p>
+            <p className="text-lg font-semibold text-white">Jeferson Bassan</p>
+            <p className="text-sm text-[#A1A1AA]">+55 (71) 99180-4605</p>
           </div>
 
           {status === "incoming" && (
